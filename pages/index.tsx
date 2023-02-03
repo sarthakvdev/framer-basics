@@ -1,11 +1,47 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import {
+  motion,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+} from 'framer-motion';
 
 const Home: NextPage = () => {
-  const list = { hidden: { scale: 1.05 } };
-  const items = { hidden: { x: -20, scale: 1.05 } };
+  // For Varients: list and items
+  const list = { hidden: { scale: 1 } };
+  const items = {
+    hidden: {
+      initial: { opacity: 0 },
+      whileInView: { opacity: 1 },
+    },
+  };
+
+  // Framer configs
+  const x = useMotionValue(0);
+  const xInput = [-100, 0, 100];
+  const background = useTransform(x, xInput, [
+    '#ff008c',
+    '#7700ff',
+    'rgb(230, 255, 0)',
+  ]);
+  const tickPath = useTransform(x, [10, 100], [0, 1]);
+  const crossPathA = useTransform(x, [-10, -55], [0, 1]);
+  const crossPathB = useTransform(x, [-50, -100], [0, 1]);
+  const color = useTransform(x, xInput, [
+    'rgb(211, 9, 225)',
+    'rgb(68, 0, 255)',
+    'rgb(3, 209, 0)',
+  ]);
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
@@ -14,7 +50,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
+      <motion.div className=" fixed top-0 left-0 right-0 h-2 bg-blue-400 origin-[0%]" style={{ scaleX }} />
+      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 py-16 text-center">
         <h1 className="text-6xl font-bold">
           Welcome to{' '}
           <a className="text-blue-600" href="https://nextjs.org">
@@ -31,22 +68,14 @@ const Home: NextPage = () => {
 
         <motion.ul
           animate="hidden"
-          variants={list}
           className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full"
         >
           <motion.li
-            // whileHover={{ scale: 1.05 }}
-            // whileTap={{ scale: 1 }}
-            // drag="x"
-            // dragConstraints={{ left: -100, right: 100 }}
-            // animate={{ y: -10 }}
             className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-            variants={items}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
           >
-            <a
-              href="https://nextjs.org/docs"
-              // className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-            >
+            <a href="https://nextjs.org/docs">
               <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
               <p className="mt-4 text-xl">
                 Find in-depth information about Next.js features and its API.
@@ -56,13 +85,10 @@ const Home: NextPage = () => {
 
           <motion.li
             className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-            // animate={{ y: -10 }}
-            variants={items}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
           >
-            <a
-              href="https://nextjs.org/learn"
-              // className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-            >
+            <a href="https://nextjs.org/learn">
               <h3 className="text-2xl font-bold">Learn &rarr;</h3>
               <p className="mt-4 text-xl">
                 Learn about Next.js in an interactive course with quizzes!
@@ -72,12 +98,10 @@ const Home: NextPage = () => {
 
           <motion.li
             className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-            variants={items}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
           >
-            <a
-              href="https://github.com/vercel/next.js/tree/canary/examples"
-              // className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-            >
+            <a href="https://github.com/vercel/next.js/tree/canary/examples">
               <h3 className="text-2xl font-bold">Examples &rarr;</h3>
               <p className="mt-4 text-xl">
                 Discover and deploy boilerplate example Next.js projects.
@@ -87,12 +111,140 @@ const Home: NextPage = () => {
 
           <motion.li
             className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-            variants={items}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
           >
-            <a
-              href="https://github.com/vercel/next.js/tree/canary/examples"
-              // className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-            >
+            <a href="https://github.com/vercel/next.js/tree/canary/examples">
+              <h3 className="text-2xl font-bold">Examples &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Discover and deploy boilerplate example Next.js projects.
+              </p>
+            </a>
+          </motion.li>
+
+          <motion.li
+            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+          >
+            <a href="https://github.com/vercel/next.js/tree/canary/examples">
+              <h3 className="text-2xl font-bold">Examples &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Discover and deploy boilerplate example Next.js projects.
+              </p>
+            </a>
+          </motion.li>
+
+          <motion.li
+            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+          >
+            <a href="https://github.com/vercel/next.js/tree/canary/examples">
+              <h3 className="text-2xl font-bold">Examples &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Discover and deploy boilerplate example Next.js projects.
+              </p>
+            </a>
+          </motion.li>
+
+          <motion.li
+            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+          >
+            <a href="https://github.com/vercel/next.js/tree/canary/examples">
+              <h3 className="text-2xl font-bold">Examples &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Discover and deploy boilerplate example Next.js projects.
+              </p>
+            </a>
+          </motion.li>
+
+          <motion.li
+            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+          >
+            <a href="https://github.com/vercel/next.js/tree/canary/examples">
+              <h3 className="text-2xl font-bold">Examples &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Discover and deploy boilerplate example Next.js projects.
+              </p>
+            </a>
+          </motion.li>
+
+          <motion.li
+            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+          >
+            <a href="https://github.com/vercel/next.js/tree/canary/examples">
+              <h3 className="text-2xl font-bold">Examples &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Discover and deploy boilerplate example Next.js projects.
+              </p>
+            </a>
+          </motion.li>
+
+          <motion.li
+            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+          >
+            <a href="https://github.com/vercel/next.js/tree/canary/examples">
+              <h3 className="text-2xl font-bold">Examples &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Discover and deploy boilerplate example Next.js projects.
+              </p>
+            </a>
+          </motion.li>
+
+          <motion.li
+            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+          >
+            <a href="https://github.com/vercel/next.js/tree/canary/examples">
+              <h3 className="text-2xl font-bold">Examples &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Discover and deploy boilerplate example Next.js projects.
+              </p>
+            </a>
+          </motion.li>
+
+          <motion.li
+            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+          >
+            <a href="https://github.com/vercel/next.js/tree/canary/examples">
+              <h3 className="text-2xl font-bold">Examples &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Discover and deploy boilerplate example Next.js projects.
+              </p>
+            </a>
+          </motion.li>
+
+          <motion.li
+            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+          >
+            <a href="https://github.com/vercel/next.js/tree/canary/examples">
+              <h3 className="text-2xl font-bold">Examples &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Discover and deploy boilerplate example Next.js projects.
+              </p>
+            </a>
+          </motion.li>
+
+          <motion.li
+            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+          >
+            <a href="https://github.com/vercel/next.js/tree/canary/examples">
               <h3 className="text-2xl font-bold">Examples &rarr;</h3>
               <p className="mt-4 text-xl">
                 Discover and deploy boilerplate example Next.js projects.
