@@ -1,8 +1,12 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const Home: NextPage = () => {
+  const list = { hidden: { scale: 1.05 } };
+  const items = { hidden: { x: -20, scale: 1.05 } };
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>
@@ -25,47 +29,77 @@ const Home: NextPage = () => {
           </code>
         </p>
 
-        <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
+        <motion.ul
+          animate="hidden"
+          variants={list}
+          className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full"
+        >
+          <motion.li
+            // whileHover={{ scale: 1.05 }}
+            // whileTap={{ scale: 1 }}
+            // drag="x"
+            // dragConstraints={{ left: -100, right: 100 }}
+            // animate={{ y: -10 }}
             className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            variants={items}
           >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and its API.
-            </p>
-          </a>
+            <a
+              href="https://nextjs.org/docs"
+              // className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            >
+              <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Find in-depth information about Next.js features and its API.
+              </p>
+            </a>
+          </motion.li>
 
-          <a
-            href="https://nextjs.org/learn"
+          <motion.li
             className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            // animate={{ y: -10 }}
+            variants={items}
           >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
+            <a
+              href="https://nextjs.org/learn"
+              // className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            >
+              <h3 className="text-2xl font-bold">Learn &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Learn about Next.js in an interactive course with quizzes!
+              </p>
+            </a>
+          </motion.li>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
+          <motion.li
             className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            variants={items}
           >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
+            <a
+              href="https://github.com/vercel/next.js/tree/canary/examples"
+              // className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            >
+              <h3 className="text-2xl font-bold">Examples &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Discover and deploy boilerplate example Next.js projects.
+              </p>
+            </a>
+          </motion.li>
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          <motion.li
             className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            variants={items}
           >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+            <a
+              href="https://github.com/vercel/next.js/tree/canary/examples"
+              // className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+            >
+              <h3 className="text-2xl font-bold">Examples &rarr;</h3>
+              <p className="mt-4 text-xl">
+                Discover and deploy boilerplate example Next.js projects.
+              </p>
+            </a>
+          </motion.li>
+        </motion.ul>
       </main>
 
       <footer className="flex h-24 w-full items-center justify-center border-t">
@@ -80,7 +114,7 @@ const Home: NextPage = () => {
         </a>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
